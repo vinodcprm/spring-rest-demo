@@ -38,4 +38,34 @@ public class HealthControllerTest {
 		mockMvc.perform(MockMvcRequestBuilders.get("/echo"))
 		.andExpect(status().isBadRequest());
 	}
+	
+	@Test
+	public void testHealthFormatBlank() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders.get("/health"))
+		.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void testHealthFormatShortLower() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders.get("/health").param("format", "short"))
+		.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void testHealthFormatShortMixed()  throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders.get("/health").param("format", "SHort"))
+		.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void testHealthFormatLongLower()  throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders.get("/health").param("format", "long"))
+		.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void testHealthFormatLongMixed()  throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders.get("/health").param("format", "LonG"))
+		.andExpect(status().isBadRequest());
+	}
 }
